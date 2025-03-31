@@ -1,0 +1,32 @@
+[formatter.mdformat]
+command = "mdformat"
+options = []
+excludes = []
+includes = ["*.md"]
+
+[formatter.beautysh]
+command = "beautysh"
+options = ["-i","2"]
+excludes = []
+includes = ["*.sh"]
+
+[formatter.deadnix]
+command = "deadnix"
+options = ["--edit"]
+excludes = []
+includes = ["*.nix"]
+
+[formatter.nixfmt-rfc-style]
+command = "nixfmt"
+options = []
+excludes = []
+includes = ["*.nix"]
+
+[formatter.prettier]
+command = "prettier"
+options = ["--write"]
+excludes = []
+includes = ["*.cjs","*.css","*.html","*.js","*.jsx","*.mdx","*.mjs","*.scss","*.ts","*.tsx","*.vue"]
+
+[global]
+excludes = ["*.png","*.jpg","*.jpeg", "LICENSE"]
