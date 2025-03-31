@@ -30,6 +30,9 @@
         shellHook = ''
           echo "Started Gize dev shell"
         '';
+
+        # Environment Variables
+        GIZE_ROOT = "./..";
       };
     };
 }

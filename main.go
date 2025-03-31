@@ -2,13 +2,18 @@ package main
 
 import (
 	"log"
+	"net/http"
 
-	"github.com/MasterEvarior/gize/cmd/git"
+	"github.com/MasterEvarior/gize/cmd/view"
 )
 
 func main() {
-	repositories, _ := git.GetAllRepositories("/home/giannin/Documents/Github")
-	for _, repo := range repositories {
-		log.Println(repo.Name)
+
+	http.HandleFunc("/", view.Overview)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Printf("Could not start the server because of the following issue: %v", err)
+	} else {
+		log.Println("Ready to accept requests")
 	}
 }
