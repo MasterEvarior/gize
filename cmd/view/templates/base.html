@@ -1,0 +1,152 @@
+{{define "base"}}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gize</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6; /* bg-gray-100 */
+        padding: 24px; /* p-6 */
+        margin: 0; /* Reset default body margin */
+      }
+
+      .container {
+        max-width: 100%; /* Make container full width */
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #ffffff; /* bg-white */
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        border-radius: 0.5rem; /* rounded-lg */
+        padding: 32px; /* p-8 */
+      }
+
+      header {
+        margin-bottom: 24px; /* mb-6 */
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.25rem; /* text-3xl */
+        font-weight: 600; /* font-semibold */
+        color: #4a5568; /* text-gray-800 */
+        margin-bottom: 8px;
+      }
+
+      header p {
+        color: #6b7280;
+        font-size: 1.125rem;
+        margin-bottom: 0;
+      }
+
+      header div {
+        margin-top: 16px; /* mt-4 */
+      }
+
+      header input {
+        width: 100%; /* w-full */
+        border-radius: 0.375rem; /* rounded-md */
+        border: 1px solid #d1d5db; /* border-gray-300 */
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
+        padding: 8px; /* p-2 */
+        font-size: 1rem;
+        outline: none;
+      }
+
+      header input:focus {
+        border-color: #3b82f6; /* focus:border-blue-500 */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* focus:ring-blue-500 */
+      }
+
+      main {
+        margin-bottom: 0;
+      }
+
+      main h2 {
+        font-size: 1.5rem; /* text-xl */
+        font-weight: 600; /* font-semibold */
+        color: #4a5568; /* text-gray-700 */
+        margin-bottom: 16px; /* mb-4 */
+      }
+
+      main .space-y-4 > div {
+        margin-bottom: 16px;
+      }
+
+      .repo-item {
+        background-color: #f7fafc; /* bg-gray-50 */
+        padding: 16px; /* p-4 */
+        border-radius: 0.375rem; /* rounded-md */
+        border: 1px solid #e2e8f0; /* border-gray-200 */
+        transition: box-shadow 0.2s ease-in-out; /* Smooth transition */
+      }
+
+      .repo-item:hover {
+        box-shadow:
+          0 1px 3px rgba(0, 0, 0, 0.1),
+          0 1px 2px rgba(0, 0, 0, 0.06); /* hover:shadow-sm approximation */
+      }
+
+      .repo-item a {
+        color: #2563eb; /* text-blue-600 */
+        font-weight: 600; /* font-semibold */
+        text-decoration: underline; /* hover:underline */
+        font-size: 1.25rem;
+      }
+
+      .repo-item a:hover {
+        color: #1e40af;
+      }
+
+      .repo-item p {
+        color: #718096; /* text-gray-600 */
+        margin-top: 4px; /* mt-1 */
+        margin-bottom: 0;
+      }
+
+      .repo-item .details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px; /* gap-2 */
+        font-size: 0.875rem; /* text-sm */
+        color: #718096; /* text-gray-500 */
+        margin-top: 8px; /* mt-2 */
+      }
+
+      .repo-item .details span {
+        margin-right: 0; /* Remove the default margin-right from gap-2 */
+      }
+
+      .repo-item .details span:not(:last-child)::after {
+        content: "|";
+        margin-left: 4px;
+      }
+
+      footer {
+        margin-top: 32px; /* mt-8 */
+        text-align: center; /* text-center */
+        font-size: 0.875rem; /* text-sm */
+        color: #718096; /* text-gray-500 */
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 p-6">
+    <header class="text-center">
+      <h1 class="text-3xl font-semibold text-gray-800">Gize</h1>
+      <p class="text-gray-600 text-lg">Your local Git repository browser</p>
+    </header>
+    <div class="container">
+      <main>
+        <div class="space-y-4"></div>
+      </main>
+    </div>
+    <footer class="mt-8 text-center text-gray-500 text-sm">
+      &copy; 2024 Gize
+    </footer>
+  </body>
+</html>
+{{end}}

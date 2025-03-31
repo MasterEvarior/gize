@@ -25,16 +25,20 @@ func GetAllRepositories(dir string) ([]GitRepository, error) {
 	var repositories []GitRepository
 	for _, file := range fileInfo {
 		if isAGitRepository(dir, file) {
+			absolutePath := filepath.Join(dir, file.Name())
+			if err != nil {
+				log.Fatalf("Cannot open git repository with path %s because of an error: %v", absolutePath, err)
+			}
 			repositories = append(repositories, GitRepository{
 				Name: file.Name(),
 			})
-		}
 	}
 
 	return repositories, nil
 }
 
-func isAGitRepository(root string, fileInfo os.FileInfo) bool {
+
+func isAGitRepository(root string, fileInfo os.FileInfo) (bool) {
 	if fileInfo.IsDir() == false {
 		return false
 	}

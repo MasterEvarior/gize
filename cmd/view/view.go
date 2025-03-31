@@ -1,6 +1,7 @@
 package view
 
 import (
+	_ "embed"
 	"html/template"
 	"net/http"
 
@@ -8,14 +9,11 @@ import (
 	"github.com/MasterEvarior/gize/cmd/helper"
 )
 
-var overviewTemplate = `
-	<h1>Overview<h1>
-	<ul>
-		{{ range . }}
-		<li>{{ .Name }}</li>
-		{{ end }}
-	</ul>
-`
+//go:embed templates/base.html
+var baseTemplate string
+
+//go:embed templates/overview.html
+var overviewTemplate string
 
 func Overview(w http.ResponseWriter, r *http.Request) {
 	rootDir := helper.GetEnvVar("GIZE_ROOT")
