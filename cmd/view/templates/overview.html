@@ -1,6 +1,6 @@
-{{ range . }}
+{{ define "body" }} {{ range . }}
 <div class="repo-item">
-  <a href="repo_detail.html">Repository Name 2</a>
+  <a href="repo_detail.html">{{ .Name }}</a>
   <p>
     Another description, perhaps a bit longer, to show how the layout adapts.
   </p>
@@ -10,4 +10,4 @@
     <span>Path: /path/to/repo2</span>
   </div>
 </div>
-{{ end }}
+{{ end }} {{end}}

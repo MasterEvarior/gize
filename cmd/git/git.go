@@ -32,13 +32,12 @@ func GetAllRepositories(dir string) ([]GitRepository, error) {
 			repositories = append(repositories, GitRepository{
 				Name: file.Name(),
 			})
+		}
 	}
-
 	return repositories, nil
 }
 
-
-func isAGitRepository(root string, fileInfo os.FileInfo) (bool) {
+func isAGitRepository(root string, fileInfo os.FileInfo) bool {
 	if fileInfo.IsDir() == false {
 		return false
 	}

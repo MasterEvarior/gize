@@ -19,6 +19,15 @@ func Overview(w http.ResponseWriter, r *http.Request) {
 	rootDir := helper.GetEnvVar("GIZE_ROOT")
 	repositories, _ := git.GetAllRepositories(rootDir)
 
-	tmpl := template.Must(template.New("overview").Parse(overviewTemplate))
+	//tmpl := template.Must(template.New("overview").Parse(overviewTemplate))
+	tmpl := renderTemplate()["overview"]
 	tmpl.Execute(w, repositories)
+}
+
+func renderTemplate() map[string]*template.Template {
+	base, _ := template.New("base").Parse(baseTemplate)
+
+	tmpl := make(map[string]*template.Template)
+	tmpl["overview"] = template.Must(base.Parse(overviewTemplate))
+	return tmpl
 }
