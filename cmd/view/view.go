@@ -15,13 +15,26 @@ var baseTemplate string
 //go:embed templates/overview.html
 var overviewTemplate string
 
+type templateData struct {
+	Title       string
+	Description string
+	Data        interface{}
+}
+
 func Overview(w http.ResponseWriter, r *http.Request) {
+	applicationTitle := helper.GetEnvVarWithDefault("GIZE_TITLE", "Gize")
+	applicationDescription := helper.GetEnvVarWithDefault("GIZE_DESCRIPTION", "Your local Git repository browser")
+
 	rootDir := helper.GetEnvVar("GIZE_ROOT")
 	repositories, _ := git.GetAllRepositories(rootDir)
 
-	//tmpl := template.Must(template.New("overview").Parse(overviewTemplate))
 	tmpl := renderTemplate()["overview"]
-	tmpl.Execute(w, repositories)
+	data := templateData{
+		Title:       applicationTitle,
+		Description: applicationDescription,
+		Data:        repositories,
+	}
+	tmpl.Execute(w, data)
 }
 
 func renderTemplate() map[string]*template.Template {

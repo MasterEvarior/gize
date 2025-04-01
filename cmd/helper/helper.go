@@ -12,3 +12,11 @@ func GetEnvVar(name string) string {
 	}
 	return value
 }
+
+func GetEnvVarWithDefault(name string, defaultValue string) string {
+	value, ok := os.LookupEnv(name)
+	if !ok {
+		return defaultValue
+	}
+	return value
+}

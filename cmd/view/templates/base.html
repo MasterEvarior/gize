@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gize</title>
+    <title>{{ .Title }}</title>
     <style>
       body {
         font-family: "Inter", sans-serif;
@@ -133,13 +133,12 @@
   </head>
   <body class="bg-gray-100 p-6">
     <header class="text-center">
-      <h1 class="text-3xl font-semibold text-gray-800">Gize</h1>
-      <p class="text-gray-600 text-lg">Your local Git repository browser</p>
+      <h1 class="text-3xl font-semibold text-gray-800">{{ .Title }}</h1>
+      <p class="text-gray-600 text-lg">{{ .Description }}</p>
     </header>
     <div class="container">
       <main>
-        <div class="space-y-4"></div>
-        {{template "body" . }}
+        <div class="space-y-4">{{template "body" .Data }}</div>
       </main>
     </div>
     <footer class="mt-8 text-center text-gray-500 text-sm">

@@ -13,3 +13,10 @@ func TestGetEnvVar(t *testing.T) {
 
 	assert.Equal(t, "my-value", result)
 }
+
+func TestGetEnvVarWithDefault(t *testing.T) {
+
+	result := GetEnvVarWithDefault("TEST_VAR_DEFAULT", "my-default")
+
+	assert.Equal(t, "my-default", result)
+}

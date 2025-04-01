@@ -33,6 +33,9 @@
 
         # Environment Variables
         GIZE_ROOT = "./..";
+        GIZE_TITLE = "Gize (dev)";
+        GIZE_DESCRIPTION = "You local Git repository browser (dev)";
+        GIZE_PORT = ":8080";
       };
     };
 }
