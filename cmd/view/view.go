@@ -18,12 +18,14 @@ var overviewTemplate string
 type templateData struct {
 	Title       string
 	Description string
+	Footer      template.HTML
 	Data        interface{}
 }
 
 func Overview(w http.ResponseWriter, r *http.Request) {
 	applicationTitle := helper.GetEnvVarWithDefault("GIZE_TITLE", "Gize")
 	applicationDescription := helper.GetEnvVarWithDefault("GIZE_DESCRIPTION", "Your local Git repository browser")
+	applicationFooter := helper.GetEnvVarWithDefault("GIZE_FOOTER", "Made with ❤️ by <a href='https://github.com/MasterEvarior/gize'>MasterEvarior</a>")
 
 	rootDir := helper.GetEnvVar("GIZE_ROOT")
 	repositories, _ := git.GetAllRepositories(rootDir)
@@ -32,6 +34,7 @@ func Overview(w http.ResponseWriter, r *http.Request) {
 	data := templateData{
 		Title:       applicationTitle,
 		Description: applicationDescription,
+		Footer:      template.HTML(applicationFooter),
 		Data:        repositories,
 	}
 	tmpl.Execute(w, data)

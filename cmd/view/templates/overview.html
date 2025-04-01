@@ -1,13 +1,9 @@
 {{ define "body" }} {{ range . }}
 <div class="repo-item">
-  <a href="repo_detail.html">{{ .Name }}</a>
-  <p>
-    Another description, perhaps a bit longer, to show how the layout adapts.
-  </p>
+  <a href="{{.Name}}">{{ .Name }}</a>
   <div class="details">
-    <span>Last Commit: 2024-01-15</span>
-    <span>Branches: 2</span>
-    <span>Path: /path/to/repo2</span>
+    <span>Last Modified: {{ .LastModified }}</span>
+    <span>Size in Bytes: {{ .SizeInBytes }}</span>
   </div>
 </div>
 {{ end }} {{end}}

@@ -4,10 +4,13 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 type GitRepository struct {
-	Name string
+	Name         string
+	SizeInBytes  int64
+	LastModified time.Time
 }
 
 func GetAllRepositories(dir string) ([]GitRepository, error) {
@@ -30,7 +33,9 @@ func GetAllRepositories(dir string) ([]GitRepository, error) {
 				log.Fatalf("Cannot open git repository with path %s because of an error: %v", absolutePath, err)
 			}
 			repositories = append(repositories, GitRepository{
-				Name: file.Name(),
+				Name:         file.Name(),
+				SizeInBytes:  file.Size(), //TODO: fix this
+				LastModified: file.ModTime(),
 			})
 		}
 	}

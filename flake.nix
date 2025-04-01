@@ -27,14 +27,11 @@
           nixfmt-rfc-style
         ];
 
-        shellHook = ''
-          echo "Started Gize dev shell"
-        '';
-
         # Environment Variables
         GIZE_ROOT = "./..";
         GIZE_TITLE = "Gize (dev)";
         GIZE_DESCRIPTION = "You local Git repository browser (dev)";
+        GIZE_FOOTER = "Made with ❤️ by <a href='https://github.com/MasterEvarior/gize'>MasterEvarior</a> (dev)";
         GIZE_PORT = ":8080";
       };
     };
