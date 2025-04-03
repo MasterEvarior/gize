@@ -1,6 +1,6 @@
 {{ define "body" }} {{ range . }}
 <div class="repo-item">
-  <a href="{{.Name}}">{{ .Name }}</a>
+  <a href="repository/{{.Name}}">{{ .Name }}</a>
   <div class="details">
     <span>Last Modified: {{ .LastModified }}</span>
     <span>Size in Bytes: {{ .SizeInBytes }}</span>

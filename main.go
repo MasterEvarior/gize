@@ -12,6 +12,8 @@ func main() {
 	port := helper.GetEnvVarWithDefault("GIZE_PORT", ":8080")
 
 	http.HandleFunc("/", view.Overview)
+	http.HandleFunc("/repository/{repository}", view.Detail)
+
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		log.Fatalf("Could not start the server because of the following issue: %v", err)
