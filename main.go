@@ -12,6 +12,8 @@ func main() {
 	port := helper.GetEnvVarWithDefault("GIZE_PORT", ":8080")
 
 	http.HandleFunc("/", view.Overview)
+	http.HandleFunc("/download/{repository}", view.Download)
+	http.HandleFunc("/health", view.Health)
 
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
