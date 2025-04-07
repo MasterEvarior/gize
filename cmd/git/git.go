@@ -10,9 +10,10 @@ import (
 )
 
 type GitRepository struct {
-	Name         string
-	Size         string
-	LastModified time.Time
+	Name          string
+	Size          string
+	ReadmeContent string
+	LastModified  time.Time
 }
 
 func GetRepository(dir string, name string) (*GitRepository, error) {
@@ -52,9 +53,10 @@ func GetAllRepositories(dir string) ([]GitRepository, error) {
 			totalSize, lastModified, _ := calculateRepositoryInfo(absolutePath)
 
 			repositories = append(repositories, GitRepository{
-				Name:         file.Name(),
-				Size:         formatSize(totalSize),
-				LastModified: lastModified,
+				Name:          file.Name(),
+				Size:          formatSize(totalSize),
+				ReadmeContent: getReadmeContent(absolutePath),
+				LastModified:  lastModified,
 			})
 		}
 	}
@@ -92,6 +94,17 @@ func calculateRepositoryInfo(path string) (int64, time.Time, error) {
 		return err
 	})
 	return size, mostCurrentTimestamp, err
+}
+
+func getReadmeContent(path string) string {
+	b, err := os.ReadFile(path + "/README.md")
+
+	log.Println(path + "/README.md")
+
+	if err != nil {
+		return ""
+	}
+	return string(b)
 }
 
 func formatSize(bytes int64) string {

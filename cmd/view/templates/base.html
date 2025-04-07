@@ -47,6 +47,15 @@
         margin-top: 16px; /* mt-4 */
       }
 
+      a {
+        color: var(--blue);
+        text-decoration: underline; /* hover:underline */
+      }
+
+      a:hover {
+        color: var(--rosewater);
+      }
+
       main {
         margin-bottom: 0;
       }
@@ -59,25 +68,19 @@
         color: var(--text);
       }
 
-      .repo-item {
+      .repo {
         background-color: var(--crust); /* bg-gray-50 */
         padding: 16px; /* p-4 */
         border-radius: 0.375rem; /* rounded-md */
         border: 1px solid #e2e8f0; /* border-gray-200 */
       }
 
-      .repo-item a {
-        color: var(--blue); /* text-blue-600 */
+      .repo a {
         font-weight: 600; /* font-semibold */
-        text-decoration: underline; /* hover:underline */
         font-size: 1.25rem;
       }
 
-      .repo-item a:hover {
-        color: var(--rosewater);
-      }
-
-      .repo-item .details {
+      .repo .details {
         display: flex;
         flex-wrap: wrap;
         gap: 8px; /* gap-2 */
@@ -86,13 +89,22 @@
         margin-top: 8px; /* mt-2 */
       }
 
-      .repo-item .details span {
+      .repo .details span {
         margin-right: 0; /* Remove the default margin-right from gap-2 */
       }
 
-      .repo-item .details span:not(:last-child)::after {
+      .repo .details span:not(:last-child)::after {
         content: "|";
         margin-left: 4px;
+      }
+
+      .readme {
+        background-color: #f7fafc;
+        padding: 16px;
+        border-radius: 0.375rem;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 0;
+        line-height: 1.6;
       }
 
       footer {

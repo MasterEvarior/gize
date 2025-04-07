@@ -1,5 +1,5 @@
 {{ define "body" }} {{ range . }}
-<div class="repo-item">
+<div class="repo">
   <a href="repository/{{.Name}}">{{ .Name }}</a>
   <div class="details">
     <span>Last Modified: {{ .LastModified.Format "2006-01-02 at 15:04" }}</span>
