@@ -26,33 +26,35 @@ type templateData struct {
 }
 
 func Overview(w http.ResponseWriter, r *http.Request) {
+	base, _ := template.New("base").Parse(baseTemplate)
+
 	rootDir := helper.GetEnvVar("GIZE_ROOT")
 	repositories, _ := git.GetAllRepositories(rootDir)
+	data := getTemplateData(repositories)
 
-	renderTemplate(w, "overview", repositories)
+	template.Must(base.Parse(overviewTemplate)).Execute(w, data)
 }
 
 func Detail(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "detail", nil)
+	base, _ := template.New("base").Parse(baseTemplate)
+
+	repoPath := r.PathValue("repository")
+	rootDir := helper.GetEnvVar("GIZE_ROOT")
+	repository, _ := git.GetRepository(rootDir, repoPath)
+
+	data := getTemplateData(repository)
+	template.Must(base.Parse(detailTemplate)).Execute(w, data)
 }
 
-func renderTemplate(w http.ResponseWriter, name string, additionalData interface{}) {
-	base, _ := template.New("base").Parse(baseTemplate)
-	tmpl := make(map[string]*template.Template)
-
-	tmpl["overview"] = template.Must(base.Parse(overviewTemplate))
-	//tmpl["detail"] = template.Must(base.Parse(detailTemplate))
-
+func getTemplateData(additionalData interface{}) templateData {
 	applicationTitle := helper.GetEnvVarWithDefault("GIZE_TITLE", "Gize")
 	applicationDescription := helper.GetEnvVarWithDefault("GIZE_DESCRIPTION", "Your local Git repository browser")
 	applicationFooter := helper.GetEnvVarWithDefault("GIZE_FOOTER", "Made with ❤️ by <a href='https://github.com/MasterEvarior/gize'>MasterEvarior</a>")
 
-	data := templateData{
+	return templateData{
 		Title:       applicationTitle,
 		Description: applicationDescription,
 		Footer:      template.HTML(applicationFooter),
 		Data:        additionalData,
 	}
-
-	tmpl[name].Execute(w, data)
 }
