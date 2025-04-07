@@ -27,6 +27,10 @@
           nixfmt-rfc-style
         ];
 
+        shellHook = ''
+          git config --local core.hooksPath .githooks/
+        '';
+
         # Environment Variables
         GIZE_ROOT = "./..";
         GIZE_TITLE = "Gize (dev)";
