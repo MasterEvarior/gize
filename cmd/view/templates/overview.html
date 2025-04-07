@@ -1,9 +1,135 @@
-{{ define "body" }} {{ range . }}
-<div class="repo">
-  <a href="repository/{{.Name}}">{{ .Name }}</a>
-  <div class="details">
-    <span>Last Modified: {{ .LastModified.Format "2006-01-02 at 15:04" }}</span>
-    <span>Size: {{ .Size }}</span>
-  </div>
-</div>
-{{ end }} {{end}}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .Title }}</title>
+    <style>
+      /* This is Catppuccin Machtiato :) */
+      /* https://github.com/catppuccin */
+      :root {
+        --base: #24273a;
+        --accent: #f5bde6;
+        --text: #cad3f5;
+        --subtext: #b8c0e0;
+        --crust: #181926;
+        --blue: #8aadf4;
+        --rosewater: #f4dbd6;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--base);
+        padding: 24px; /* p-6 */
+        margin: 0; /* Reset default body margin */
+      }
+
+      header {
+        margin-bottom: 24px; /* mb-6 */
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.25rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+
+      header p {
+        color: var(--subtext);
+        font-size: 1.125rem;
+        margin-bottom: 0;
+      }
+
+      header div {
+        margin-top: 16px; /* mt-4 */
+      }
+
+      a {
+        color: var(--blue);
+        text-decoration: underline; /* hover:underline */
+      }
+
+      a:hover {
+        color: var(--rosewater);
+      }
+
+      main {
+        margin-bottom: 0;
+      }
+
+      main .space-y-4 > div {
+        margin-bottom: 16px;
+      }
+
+      main h2 {
+        color: var(--text);
+      }
+
+      .repo {
+        background-color: var(--crust); /* bg-gray-50 */
+        padding: 16px; /* p-4 */
+        border-radius: 0.375rem; /* rounded-md */
+        border: 1px solid #e2e8f0; /* border-gray-200 */
+      }
+
+      .repo h2 {
+        font-weight: 600; /* font-semibold */
+        font-size: 1.25rem;
+      }
+
+      .repo .details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px; /* gap-2 */
+        font-size: 0.875rem; /* text-sm */
+        color: var(--subtext); /* text-gray-500 */
+        margin-top: 8px; /* mt-2 */
+      }
+
+      .repo .details span {
+        margin-right: 0; /* Remove the default margin-right from gap-2 */
+      }
+
+      .repo .details span:not(:last-child)::after {
+        content: "|";
+        margin-left: 4px;
+      }
+
+      footer {
+        margin-top: 32px; /* mt-8 */
+        text-align: center; /* text-center */
+        font-size: 0.875rem; /* text-sm */
+        color: var(--subtext); /* text-gray-500 */
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 p-6">
+    <header class="text-center">
+      <h1 class="text-3xl font-semibold text-gray-800">{{ .Title }}</h1>
+      <p class="text-gray-600 text-lg">{{ .Description }}</p>
+    </header>
+    <div class="container">
+      <main>
+        <div class="space-y-4">
+          {{ range .Repositories }}
+          <div class="repo">
+            <h2>{{ .Name }}</h2>
+            <div class="details">
+              <span
+                >Last Modified: {{ .LastModified.Format "2006-01-02 at 15:04"
+                }}</span
+              >
+              <span>Size: {{ .Size }}</span>
+            </div>
+          </div>
+          {{ end }}
+        </div>
+      </main>
+    </div>
+    <footer class="mt-8 text-center text-gray-500 text-sm">
+      {{ .Footer }}
+    </footer>
+  </body>
+</html>

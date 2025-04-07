@@ -12,7 +12,6 @@ func main() {
 	port := helper.GetEnvVarWithDefault("GIZE_PORT", ":8080")
 
 	http.HandleFunc("/", view.Overview)
-	http.HandleFunc("/repository/{repository}", view.Detail)
 
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
