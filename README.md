@@ -36,13 +36,14 @@ You should now see the UI at http://localhost:8080
 
 ### Environment Variables
 
-| Name             | Description                                                | Default                                                                                 | Example             | Mandatory |
-|------------------|------------------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------|-----------|
+| Name             | Description                                                | Default                                                                                 | Example             | Mandatory  |
+|------------------|------------------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------|------------|
 | GIZE_ROOT        | The Path to your directory where all your repositories are |                                                                                         | `/repositories`     | ✅         |
 | GIZE_TITLE       | Title that should be displayed                             | Gize                                                                                    | My cool title       | ❌         |
 | GIZE_DESCRIPTION | Description that should be displayed under the title       | Your local Git repository browser                                                       | My cool description | ❌         |
-| GIZE_FOOTER      | Content of the footer, this allows for HTML                | Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a> | My cool footer      | ❌         |
+| GIZE_FOOTER      | Content of the footer, this allows for HTML                | Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a>| My cool footer      | ❌         |
 | GIZE_PORT        | Port                                                       | `:8080`                                                                                 | `:8455`             | ❌         |
+| GIZE_ENABLE_DOWNLOAD | Wether or not to enable the ability to download a repository as a ZIP | `false` |`true` | ❌ |
 
 ## Development
 

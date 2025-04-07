@@ -79,9 +79,14 @@ func calculateRepositoryInfo(path string) (int64, time.Time, error) {
 }
 
 func formatSize(bytes int64) string {
+	const bytesInKB = 1024
 	const bytesInMB = 1024 * 1024
-	if bytes < bytesInMB {
+	if bytes < bytesInKB {
 		return fmt.Sprintf("%d Bytes", bytes)
+	}
+
+	if bytes < bytesInMB {
+		return fmt.Sprintf("%.1f KB", float64(bytes)/float64(bytesInKB))
 	}
 
 	return fmt.Sprintf("%.1f MB", float64(bytes)/float64(bytesInMB))
