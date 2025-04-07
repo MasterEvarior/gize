@@ -2,8 +2,8 @@
 <div class="repo-item">
   <a href="repository/{{.Name}}">{{ .Name }}</a>
   <div class="details">
-    <span>Last Modified: {{ .LastModified }}</span>
-    <span>Size in Bytes: {{ .SizeInBytes }}</span>
+    <span>Last Modified: {{ .LastModified.Format "2006-01-02 at 15:04" }}</span>
+    <span>Size: {{ .Size }}</span>
   </div>
 </div>
 {{ end }} {{end}}
