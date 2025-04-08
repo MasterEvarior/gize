@@ -6,9 +6,11 @@ import (
 	_ "embed"
 	"fmt"
 	"html/template"
-	"log"
+	"io"
 	"net/http"
 	"os"
+	"path"
+	"path/filepath"
 
 	"github.com/MasterEvarior/gize/cmd/git"
 	"github.com/MasterEvarior/gize/cmd/helper"
@@ -36,23 +38,12 @@ func Overview(w http.ResponseWriter, r *http.Request) {
 
 func Download(w http.ResponseWriter, r *http.Request) {
 	repositoryName := r.PathValue("repository")
-	buf := new(bytes.Buffer)
-	writer := zip.NewWriter(buf)
-	data, err := os.ReadFile(repositoryName)
+	rootDir := helper.GetEnvVar("GIZE_ROOT")
+
+	buf, err := zipDirectory(path.Join(rootDir, repositoryName))
 	if err != nil {
-		log.Fatal(err)
-	}
-	f, err := writer.Create(repositoryName)
-	if err != nil {
-		log.Fatal(err)
-	}
-	_, err = f.Write([]byte(data))
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = writer.Close()
-	if err != nil {
-		log.Fatal(err)
+		http.Error(w, "Could not ZIP repository", 500)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/zip")
@@ -64,6 +55,56 @@ func Health(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Length", "0")
 	w.WriteHeader(http.StatusNoContent)
 	w.Write(nil)
+}
+
+func zipDirectory(source string) (*bytes.Buffer, error) {
+	var buf bytes.Buffer
+	writer := zip.NewWriter(&buf)
+	defer writer.Close()
+
+	err := filepath.Walk(source, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		header, err := zip.FileInfoHeader(info)
+		if err != nil {
+			return err
+		}
+
+		header.Method = zip.Deflate
+
+		header.Name, err = filepath.Rel(filepath.Dir(source), path)
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			header.Name += "/"
+		}
+
+		headerWriter, err := writer.CreateHeader(header)
+		if err != nil {
+			return err
+		}
+
+		if info.IsDir() {
+			return nil
+		}
+
+		f, err := os.Open(path)
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+
+		_, err = io.Copy(headerWriter, f)
+		return err
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &buf, nil
 }
 
 func getTemplateData(additionalData []git.GitRepository) templateData {
