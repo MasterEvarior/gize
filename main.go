@@ -14,7 +14,7 @@ func main() {
 	http.HandleFunc("/", view.Overview)
 	http.HandleFunc("/health", view.Health)
 
-	if helper.IsEnabled("GIZE_ENABLE_DOWNLOAD", false) {
+	if helper.IsEnabled("GIZE_ENABLE_DOWNLOAD") {
 		http.HandleFunc("/download/{repository}", view.Download)
 	}
 

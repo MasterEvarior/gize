@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path"
@@ -29,7 +30,14 @@ type templateData struct {
 
 func Overview(w http.ResponseWriter, r *http.Request) {
 	rootDir := helper.GetEnvVar("GIZE_ROOT")
-	repositories, _ := git.GetAllRepositories(rootDir)
+	repositories, err := git.GetAllRepositories(rootDir)
+	if err != nil {
+		errMessage := "Could not gather necessary information about Git repositories"
+		log.Printf("%s: %v", errMessage, err)
+		http.Error(w, errMessage, 500)
+		return
+	}
+
 	data := getTemplateData(repositories)
 
 	tmpl := template.Must(template.New("overview").Parse(overviewTemplate))
@@ -42,7 +50,9 @@ func Download(w http.ResponseWriter, r *http.Request) {
 
 	buf, err := zipDirectory(path.Join(rootDir, repositoryName))
 	if err != nil {
-		http.Error(w, "Could not ZIP repository", 500)
+		errMessage := "Could not ZIP repository"
+		log.Printf("%s: %v", errMessage, err)
+		http.Error(w, errMessage, 500)
 		return
 	}
 
@@ -111,7 +121,7 @@ func getTemplateData(additionalData []git.GitRepository) templateData {
 	applicationTitle := helper.GetEnvVarWithDefault("GIZE_TITLE", "Gize")
 	applicationDescription := helper.GetEnvVarWithDefault("GIZE_DESCRIPTION", "Your local Git repository browser")
 	applicationFooter := helper.GetEnvVarWithDefault("GIZE_FOOTER", "Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a>")
-	enableDownload := helper.IsEnabled("GIZE_ENABLE_DOWNLOAD", false)
+	enableDownload := helper.IsEnabled("GIZE_ENABLE_DOWNLOAD")
 
 	return templateData{
 		Title:          applicationTitle,

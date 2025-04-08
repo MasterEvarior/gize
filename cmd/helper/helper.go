@@ -22,15 +22,15 @@ func GetEnvVarWithDefault(name string, defaultValue string) string {
 	return value
 }
 
-func IsEnabled(name string, defaultValue bool) bool {
+func IsEnabled(name string) bool {
 	value, ok := os.LookupEnv(name)
 	if !ok {
-		return defaultValue
+		return false
 	}
 
 	if strings.ToLower(value) == "true" || value == "1" || strings.ToLower(value) == "yes" {
-		return !defaultValue
+		return true
 	}
 
-	return defaultValue
+	return false
 }
