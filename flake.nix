@@ -12,11 +12,10 @@
       pkgs = nixpkgs.legacyPackages."${x86}";
     in
     {
-      devShells."${x86}".default = pkgs.mkShell {
+      devShells."${x86}".default = pkgs.mkShellNoCC {
         packages = with pkgs; [
           # Golang
           go
-          gotools
           golangci-lint
 
           # Formatters
@@ -24,6 +23,7 @@
           beautysh
           mdformat
           yamlfmt
+          jsonfmt
           deadnix
           nixfmt-rfc-style
         ];
