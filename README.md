@@ -39,8 +39,8 @@ The easiest way to run Gize, is to use the provided container.
 
 ```shell
 docker run -d \
-  -e GIZE_ROOT="/repositories"
-  -v ./path/to/your/repositories:/repositories
+  -e GIZE_ROOT="/repositories" \
+  -v ./path/to/your/repositories:/repositories \
   -p 8080:8080 \
   ghcr.io/masterevarior/gize:latest
 ```
@@ -57,6 +57,23 @@ You should now see the UI at http://localhost:8080
 | GIZE_FOOTER      | Content of the footer, this allows for HTML                | Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a>| My cool footer      | ❌         |
 | GIZE_PORT        | Port                                                       | `:8080`                                                                                 | `:8455`             | ❌         |
 | GIZE_ENABLE_DOWNLOAD | Wether or not to enable the ability to download a repository as a ZIP | `false` |`true` | ❌ |
+
+## Deployment
+
+With Docker compose:
+
+```yaml
+services:
+  gize:
+    image: ghcr.io/masterevarior/gize:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - GIZE_ROOT=/repositories
+    volumes:
+      - ./path/to/your/repositories:/repositories
+    restart: unless-stopped
+```
 
 ## Development
 
