@@ -79,7 +79,11 @@ services:
 
 ### Linting
 
-The linting for Golang is yet to be implemented.
+Linting is done with [golangci-lint](https://golangci-lint.run/), which can be run like so:
+
+```shell
+golangci-lint run
+```
 
 Run all other linters with the treefmt command. Note that the command does not install the required formatters.
 

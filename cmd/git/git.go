@@ -46,17 +46,13 @@ func GetAllRepositories(dir string) ([]GitRepository, error) {
 }
 
 func isAGitRepository(root string, fileInfo os.FileInfo) bool {
-	if fileInfo.IsDir() == false {
+	if !fileInfo.IsDir() {
 		return false
 	}
 
 	absolutePath := filepath.Join(root, fileInfo.Name(), ".git")
 	_, err := os.Stat(absolutePath)
-	if os.IsNotExist(err) {
-		return false
-	}
-
-	return true
+	return !os.IsNotExist(err)
 }
 
 func calculateRepositoryInfo(path string) (int64, time.Time, error) {

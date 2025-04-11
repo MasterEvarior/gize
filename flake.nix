@@ -17,6 +17,7 @@
           # Golang
           go
           gotools
+          golangci-lint
 
           # Formatters
           treefmt

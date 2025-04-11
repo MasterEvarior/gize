@@ -2,4 +2,5 @@
 
 addedFiles=$(git diff --cached --name-only --diff-filter=d)
 treefmt
+golangci-lint run
 git add $addedFiles

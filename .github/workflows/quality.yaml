@@ -5,7 +5,7 @@ on:
     types: [opened, reopened, edited]
   workflow_call:
 jobs:
-  lint:
+  treefmt-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +33,13 @@ jobs:
           ci: true
           allow_missing_formatter: true
           no_cache: true
+  golang-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v7
   test:
     runs-on: ubuntu-latest
     steps:

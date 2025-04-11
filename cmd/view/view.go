@@ -41,7 +41,11 @@ func Overview(w http.ResponseWriter, r *http.Request) {
 	data := getTemplateData(repositories)
 
 	tmpl := template.Must(template.New("overview").Parse(overviewTemplate))
-	tmpl.Execute(w, data)
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		sendInternalServerError(w, err)
+		return
+	}
 }
 
 func Download(w http.ResponseWriter, r *http.Request) {
@@ -58,13 +62,21 @@ func Download(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/zip")
 	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s.zip\"", repositoryName))
-	w.Write(buf.Bytes())
+	_, err = w.Write(buf.Bytes())
+	if err != nil {
+		sendInternalServerError(w, err)
+		return
+	}
 }
 
 func Health(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Length", "0")
 	w.WriteHeader(http.StatusNoContent)
-	w.Write(nil)
+	_, err := w.Write(nil)
+	if err != nil {
+		sendInternalServerError(w, err)
+		return
+	}
 }
 
 func zipDirectory(source string) (*bytes.Buffer, error) {
@@ -130,4 +142,8 @@ func getTemplateData(additionalData []git.GitRepository) templateData {
 		EnableDownload: enableDownload,
 		Repositories:   additionalData,
 	}
+}
+
+func sendInternalServerError(w http.ResponseWriter, e error) {
+	http.Error(w, e.Error(), http.StatusInternalServerError)
 }
