@@ -12,6 +12,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"time"
 
 	"github.com/MasterEvarior/gize/cmd/git"
 	"github.com/MasterEvarior/gize/cmd/helper"
@@ -30,7 +31,7 @@ type templateData struct {
 
 func Overview(w http.ResponseWriter, r *http.Request) {
 	rootDir := helper.GetEnvVar("GIZE_ROOT")
-	repositories, err := git.GetAllRepositories(rootDir)
+	repositories, err := getGitRepositories(rootDir)
 	if err != nil {
 		errMessage := "Could not gather necessary information about Git repositories"
 		log.Printf("%s: %v", errMessage, err)
@@ -127,6 +128,24 @@ func zipDirectory(source string) (*bytes.Buffer, error) {
 	}
 
 	return &buf, nil
+}
+
+var cachedRepositories = []git.GitRepository{}
+var cacheValid = time.Duration(300)
+var cacheLastUpdate = time.Now().Add(time.Second * cacheValid * -1)
+
+func getGitRepositories(directory string) ([]git.GitRepository, error) {
+	enableCache := helper.IsEnabled("GIZE_ENABLE_CACHE")
+
+	if !enableCache || time.Now().After(cacheLastUpdate.Add(time.Second*cacheValid)) {
+		cacheLastUpdate = time.Now()
+		repositories, err := git.GetAllRepositories(directory)
+		if err != nil {
+			return nil, err
+		}
+		cachedRepositories = repositories
+	}
+	return cachedRepositories, nil
 }
 
 func getTemplateData(additionalData []git.GitRepository) templateData {

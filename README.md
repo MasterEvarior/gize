@@ -14,7 +14,7 @@ The name comes from the combination of the words "Gaze" and "Git".
 style="display: block;
 margin-left: auto;
 margin-right: auto;
-width: 95%;"
+width: 100%;"
 src="./images/screenshot.png"
 alt="A screenshot, presenting the application">
 </img>
@@ -57,6 +57,7 @@ You should now see the UI at http://localhost:8080
 | GIZE_FOOTER      | Content of the footer, this allows for HTML                | Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a>| My cool footer      | ❌         |
 | GIZE_PORT        | Port                                                       | `:8080`                                                                                 | `:8455`             | ❌         |
 | GIZE_ENABLE_DOWNLOAD | Wether or not to enable the ability to download a repository as a ZIP | `false` |`true` | ❌ |
+| GIZE_ENABLE_CACHE | Wether or not to enable a simply in-memory cache to speed up subsequent loads. The livetime is 300s by default. | `false` |`true` | ❌ |
 
 ## Deployment
 

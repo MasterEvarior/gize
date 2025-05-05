@@ -21,7 +21,5 @@ func main() {
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		log.Fatalf("Could not start the server because of the following issue: %v", err)
-	} else {
-		log.Println("Ready to accept requests")
 	}
 }

@@ -39,6 +39,7 @@
         GIZE_FOOTER = "Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a> (dev)";
         GIZE_PORT = ":8080";
         GIZE_ENABLE_DOWNLOAD = "true";
+        GIZE_ENABLE_CACHE = "true";
       };
     };
 }
