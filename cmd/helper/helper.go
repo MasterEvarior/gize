@@ -28,7 +28,7 @@ func IsEnabled(name string) bool {
 		return false
 	}
 
-	if strings.ToLower(value) == "true" || value == "1" || strings.ToLower(value) == "yes" {
+	if strings.ToLower(value) == "true" || value == "1" || strings.ToLower(value) == "yes" || strings.ToLower(value) == "on" {
 		return true
 	}
 
