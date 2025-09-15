@@ -1,12 +1,16 @@
 # Gize
 
-![quality workflow](https://github.com/MasterEvarior/gize/actions/workflows/quality.yaml/badge.svg) ![release workflow](https://github.com/MasterEvarior/gize/actions/workflows/publish.yaml/badge.svg)
+![quality workflow](https://github.com/MasterEvarior/gize/actions/workflows/quality.yaml/badge.svg) ![release workflow](https://github.com/MasterEvarior/gize/actions/workflows/publish.yaml/badge.svg) ![Static Badge](https://img.shields.io/badge/Status-unmaintained-yellow)
 
 A lightweight web app to display your local Git repositories. Easily browse repo names, view metadata, and download ZIP archives on the fly.
 
 This project was built for my own (admittedly narrow) use case: I wanted a simple way to display a list of Git repositories that are automatically backed up to my server. Tools like [GitLab](https://about.gitlab.com/) and [Forgejo](https://forgejo.org/) are great, but far too heavy for my needs as I am just using a fraction of their features. So, I made something leaner.
 
 The name comes from the combination of the words "Gaze" and "Git".
+
+## Project Status
+
+I have since moved to [gogs](https://gogs.io/), which also fullfills my needs. Dependency updates and such will be merged, sometimes even a release will be created. I won't do new features though. If you want those, create a PR and I am happy to merge those.
 
 ## Screenshots
 
@@ -49,13 +53,13 @@ You should now see the UI at http://localhost:8080
 
 ### Environment Variables
 
-| Name             | Description                                                | Default                                                                                 | Example             | Mandatory  |
+| Name | Description | Default | Example | Mandatory |
 |------------------|------------------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------|------------|
-| GIZE_ROOT        | The Path to your directory where all your repositories are |                                                                                         | `/repositories`     | ✅         |
-| GIZE_TITLE       | Title that should be displayed                             | Gize                                                                                    | My cool title       | ❌         |
-| GIZE_DESCRIPTION | Description that should be displayed under the title       | Your local Git repository browser                                                       | My cool description | ❌         |
-| GIZE_FOOTER      | Content of the footer, this allows for HTML                | Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a>| My cool footer      | ❌         |
-| GIZE_PORT        | Port                                                       | `:8080`                                                                                 | `:8455`             | ❌         |
+| GIZE_ROOT | The Path to your directory where all your repositories are | | `/repositories` | ✅ |
+| GIZE_TITLE | Title that should be displayed | Gize | My cool title | ❌ |
+| GIZE_DESCRIPTION | Description that should be displayed under the title | Your local Git repository browser | My cool description | ❌ |
+| GIZE_FOOTER | Content of the footer, this allows for HTML | Made with ❤️ and published on <a href='https://github.com/MasterEvarior/gize'>GitHub</a>| My cool footer | ❌ |
+| GIZE_PORT | Port | `:8080` | `:8455` | ❌ |
 | GIZE_ENABLE_DOWNLOAD | Wether or not to enable the ability to download a repository as a ZIP | `false` |`true` | ❌ |
 | GIZE_ENABLE_CACHE | Wether or not to enable a simply in-memory cache to speed up subsequent loads. The livetime is 300s by default. | `false` |`true` | ❌ |
 
