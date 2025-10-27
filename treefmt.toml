@@ -41,4 +41,4 @@ excludes = []
 includes = ["*.json","*.jsonc"]
 
 [global]
-excludes = ["*.png","*.jpg","*.jpeg", "LICENSE"]
+excludes = ["*.png","*.jpg","*.jpeg", "LICENSE", ".github/ISSUE_TEMPLATE/*"]
