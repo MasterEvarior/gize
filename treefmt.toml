@@ -2,7 +2,7 @@
 command = "mdformat"
 options = []
 excludes = []
-includes = ["*.md"]
+includes = ["README.md"]
 
 [formatter.beautysh]
 command = "beautysh"
@@ -24,7 +24,7 @@ includes = ["*.nix"]
 
 [formatter.prettier]
 command = "prettier"
-options = ["--write"]
+options = ["--check"]
 excludes = []
 includes = ["*.cjs","*.css","*.html","*.js","*.jsx","*.mdx","*.mjs","*.scss","*.ts","*.tsx","*.vue"]
 
@@ -41,4 +41,4 @@ excludes = []
 includes = ["*.json","*.jsonc"]
 
 [global]
-excludes = ["*.png","*.jpg","*.jpeg", "LICENSE", ".github/ISSUE_TEMPLATE/*"]
+excludes = ["*.png","*.jpg","*.jpeg", "LICENSE"]
