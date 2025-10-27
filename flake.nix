@@ -41,5 +41,12 @@
         GIZE_ENABLE_DOWNLOAD = "true";
         GIZE_ENABLE_CACHE = "true";
       };
+
+      packages."${x86}".default = pkgs.buildGoModule {
+        pname = "gize";
+        version = "v1.1.0";
+        src = ./.;
+        vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
+      };
     };
 }
