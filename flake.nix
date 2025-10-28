@@ -6,7 +6,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { self, nixpkgs, ... }:
     let
       x86 = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages."${x86}";
@@ -43,11 +43,58 @@
         GIZE_ENABLE_CACHE = "true";
       };
 
-      packages."${x86}".default = pkgs.buildGoModule {
-        pname = "gize";
-        version = "v1.1.0";
-        src = ./.;
-        vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
+      packages."${x86}" = {
+        default = pkgs.buildGoModule {
+          pname = "gize";
+          version = "v1.1.0";
+          src = ./.;
+          vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
+
+          meta.mainProgram = "gize";
+        };
+
+        image = pkgs.dockerTools.buildLayeredImage {
+          name = "gize";
+
+          contents = [ self.packages.${x86}.default ];
+
+          config.Cmd = [ "${lib.getExe self.packages.${x86}.default}" ];
+        };
+      };
+
+      apps.${x86} = {
+        default = {
+          type = "app";
+          program = "${lib.getExe self.packages.x86_64-linux.default}";
+          meta.description = "Run Gize, a tool to display Git repositories through a website.";
+        };
+
+        image = {
+          type = "app";
+          program = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "gize";
+              runtimeInputs = [ pkgs.docker ];
+              text = ''
+                set -euo pipefail
+                image_path="${self.packages.${x86}.image}"
+
+                echo "--- Loading Docker image: gize (from $image_path) ---"
+                docker load < "$image_path"
+
+                echo "--- Running container 'gize' on http://localhost:8080 ---"
+
+                docker run \
+                  -e GIZE_ROOT="/repositories" \
+                  -v ./..:/repositories \
+                  -p 8080:8080 \
+                  --rm \
+                  gize:${toString self.packages.${x86}.image.imageTag}
+              '';
+            }
+          );
+          meta.description = "Run Gize, a tool to display Git repositories through a website (but in a container).";
+        };
       };
 
       checks."${x86}" = {
