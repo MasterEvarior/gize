@@ -11,23 +11,24 @@
       x86 = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages."${x86}";
       lib = pkgs.lib;
+      goPackages = with pkgs; [
+        go
+        golangci-lint
+      ];
+      formatterPackages = with pkgs; [
+        treefmt
+        beautysh
+        mdformat
+        yamlfmt
+        jsonfmt
+        deadnix
+        nixfmt-rfc-style
+      ];
+      vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
     in
     {
       devShells."${x86}".default = pkgs.mkShellNoCC {
-        packages = with pkgs; [
-          # Golang
-          go
-          golangci-lint
-
-          # Formatters
-          treefmt
-          beautysh
-          mdformat
-          yamlfmt
-          jsonfmt
-          deadnix
-          nixfmt-rfc-style
-        ];
+        packages = goPackages ++ formatterPackages;
 
         shellHook = ''
           git config --local core.hooksPath .githooks/
@@ -45,10 +46,11 @@
 
       packages."${x86}" = {
         default = pkgs.buildGoModule {
+          inherit vendorHash;
+
           pname = "gize";
           version = "v1.1.0";
           src = ./.;
-          vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
 
           meta.mainProgram = "gize";
         };
@@ -99,6 +101,8 @@
 
       checks."${x86}" = {
         tests = pkgs.buildGoModule {
+          inherit vendorHash;
+
           name = "tests";
           src = ./.;
           doCheck = true;
@@ -114,28 +118,16 @@
           installPhase = ''
             mkdir "$out"
           '';
-
-          vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
         };
 
         formatting = pkgs.buildGoModule {
+          inherit vendorHash;
+
           name = "formatting";
           src = ./.;
           doCheck = true;
 
-          nativeBuildInputs = with pkgs; [
-            go
-            golangci-lint
-
-            treefmt
-            beautysh
-            mdformat
-            yamlfmt
-            jsonfmt
-            deadnix
-            nodePackages.prettier
-            nixfmt-rfc-style
-          ];
+          nativeBuildInputs = goPackages ++ formatterPackages;
 
           checkPhase = ''
             export HOME=$PWD
@@ -149,8 +141,6 @@
           installPhase = ''
             mkdir "$out"
           '';
-
-          vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
         };
       };
     };
