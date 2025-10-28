@@ -23,7 +23,7 @@ jobs:
           nix-package: nixpkgs#nixFlakes
       - name: Check formatting
         run: nix build .#checks.x86_64-linux.formatting
-  test-build:
+  go-test-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -32,3 +32,12 @@ jobs:
           nix-package: nixpkgs#nixFlakes
       - name: build
         run: nix build .
+  image-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          nix-package: nixpkgs#nixFlakes
+      - name: build
+        run: nix build .#image
