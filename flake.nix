@@ -23,6 +23,7 @@
         jsonfmt
         deadnix
         nixfmt-rfc-style
+        nodePackages.prettier
       ];
       vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
     in
