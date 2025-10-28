@@ -112,6 +112,29 @@ If you are using [NixOS or the Nix package manager](https://nixos.org/), there i
 nix develop
 ```
 
+You can also build, test and start the application with nix.
+
+```shell
+# Build the gize binary
+# The resulting binary will be in ./result/bin/gize
+nix build
+
+# Run the application directly
+# This uses the environment variables from the dev shell
+nix run
+
+# Run all checks (tests and formatting)
+nix flake check
+
+# Build the container image
+# The resulting image tarball will be in ./result
+nix build .#image
+
+# Run the application inside a Docker container
+# This builds, loads, and runs the container via Docker
+nix run .#image
+```
+
 If you happen to use [nix-direnv](https://github.com/nix-community/nix-direnv), this is also supported.
 
 ## Improvements, issues and more
