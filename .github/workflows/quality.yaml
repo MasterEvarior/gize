@@ -8,7 +8,7 @@ jobs:
   go-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           nix-package: nixpkgs#nixFlakes
@@ -17,7 +17,7 @@ jobs:
   formatting:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           nix-package: nixpkgs#nixFlakes
@@ -26,7 +26,7 @@ jobs:
   go-test-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           nix-package: nixpkgs#nixFlakes
@@ -35,7 +35,7 @@ jobs:
   image-test-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           nix-package: nixpkgs#nixFlakes
