@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Log in to the Container registry
-        uses: docker/login-action@a0d57b8e43b6ef1cca20559d68cec2227e63fccd
+        uses: docker/login-action@bb9683dca29f758cbd6ee832740e9f2dbeb21a3e
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
