@@ -25,7 +25,7 @@
         nixfmt-rfc-style
         nodePackages.prettier
       ];
-      vendorHash = "sha256-/OzNsgU3VNnkL9sXDoZahJ7fMqoYCEmstnNnGvmF03A=";
+      vendorHash = "sha256-rNprpRzQMj1xaGSJCli24HUByt3kC5uQ88J4fqfbRjQ=";
     in
     {
       devShells."${x86}".default = pkgs.mkShellNoCC {
